@@ -20,6 +20,7 @@ This document describes key technologies and architecture.
    Basic authentication will be used.
 3. Successful log in creates a new session.
 4. Session expires after predefined time of no activity.
+5. There is a special service for authorizations which returns a token
 
 #### Volunteer details
 
@@ -90,27 +91,27 @@ This document describes key technologies and architecture.
 ## Architecture
 
 ```
-     +----------+
-     |          |
-     | database |
-     |          |
-     +----------+
-          ^
-          |
-     +----------+
-     |          |
-     | database |
-     |    to    |
-     | grapql   |
-     |  adapter |
-     +----------+
-       ^      ^
-       |      |
- +------+    +---------+
- |      |    |         |
- | http |    | statics |
- |      |    |         |
- +------+    +---------+
+             +----------+
+             |          |
+             | database |
+             |          |
+             +----------+
+                  ^
+                  |
+             +----------+
+             |          |
+             | database |
+             |    to    |
+     +------>| grapql   |<------+
+     |       |  adapter |       |
+     |       +----------+       |
+     |             ^            |
+     |             |            |
+ +------+   +---------+    +---------+
+ |      |   |         |    |         |
+ | auth |<--| service |    | statics |
+ |      |   |         |    |         |
+ +------+   +---------+    +---------+
 ```
 
 ## Technologies
